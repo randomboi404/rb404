@@ -1,603 +1,658 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>randomboi404 | Arch Linux Developer</title>
-    <meta name="description" content="randomboi404's digital workspace - An Arch Linux enthusiast's journey through code, rice, and terminal wizardry">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me :) - randomboi404</title>
+  <meta content="About Me :) - randomboi404" property="title" />
+  <meta content="I am randomboi404, a developer who is interested in Linux. I use Arch btw." property="description" />
+  <meta content="https://randomboi404.is-a.dev/" property="url" />
+  <meta content="https://randomboi404.is-a.dev/profile" property="image" />
+  <meta content="#192636" data-react-helmet="true" name="theme-color" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-trail"></div>
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-trail"></div>
 
-    <!-- Animated Background -->
-    <div class="background-image-layer">
-        <canvas id="particle-background"></canvas>
-        <div class="gradient-overlay"></div>
+  <!-- Animated Background -->
+  <div class="background-image-layer">
+    <canvas id="particle-background"></canvas>
+    <div class="gradient-overlay"></div>
+  </div>
+
+  <!-- Desktop -->
+  <div class="desktop">
+    <!-- Enhanced Hyprland Bar -->
+    <div class="hypr-bar">
+      <div class="bar-left">
+        <div class="app-launcher" onclick="toggleAppMenu()">
+          <i class="fab fa-linux"></i>
+          <span>Applications</span>
+        </div>
+        <div class="window-title">randomboi404@arch:~</div>
+      </div>
+
+      <div class="bar-center">
+        <div class="current-time" id="current-time"></div>
+      </div>
+
+      <div class="bar-right">
+        <div class="system-tray">
+          <span class="tray-item" title="Settings" onclick="openSettings()"><i class="fas fa-cog"></i></span>
+        </div>
+        <div class="power-menu" onclick="togglePowerMenu()">
+          <i class="fas fa-power-off"></i>
+        </div>
+      </div>
     </div>
 
-    <!-- Desktop -->
-    <div class="desktop">
-        <!-- Enhanced Hyprland Bar -->
-        <div class="hypr-bar">
-            <div class="bar-left">
-                <div class="app-launcher" onclick="toggleAppMenu()">
-                    <i class="fab fa-linux"></i>
-                    <span>Applications</span>
-                </div>
-                <div class="window-title">randomboi404@arch:~</div>
-            </div>
+    <!-- Enhanced Desktop Icons -->
+    <div class="desktop-icons">
+      <div class="desktop-icon" onclick="openTerminal()" data-tooltip="Terminal">
+        <i class="fas fa-terminal"></i>
+        <span>Terminal</span>
+        <div class="icon-glow"></div>
+      </div>
+      <div class="desktop-icon" onclick="openProjects()" data-tooltip="Projects">
+        <i class="fas fa-folder-open"></i>
+        <span>Projects</span>
+        <div class="icon-glow"></div>
+      </div>
+      <div class="desktop-icon" onclick="openAbout()" data-tooltip="About Me">
+        <i class="fas fa-user-ninja"></i>
+        <span>About</span>
+        <div class="icon-glow"></div>
+      </div>
+      <div class="desktop-icon" onclick="openContact()" data-tooltip="Contact">
+        <i class="fas fa-envelope"></i>
+        <span>Contact</span>
+        <div class="icon-glow"></div>
+      </div>
+      <div class="desktop-icon" onclick="openRice()" data-tooltip="Personal Info">
+        <i class="fas fa-desktop"></i>
+        <span>Personal</span>
+        <div class="icon-glow"></div>
+      </div>
+      <div class="desktop-icon" onclick="openSettings()" data-tooltip="Settings">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+        <div class="icon-glow"></div>
+      </div>
+    </div>
 
-            <div class="bar-center">
-                <div class="current-time" id="current-time"></div>
-            </div>
-
-            <div class="bar-right">
-                <div class="system-tray">
-                    <span class="tray-item" title="Settings" onclick="openSettings()"><i class="fas fa-cog"></i></span>
-                </div>
-                <div class="power-menu" onclick="togglePowerMenu()">
-                    <i class="fas fa-power-off"></i>
-                </div>
-            </div>
+    <!-- App Menu -->
+    <div class="app-menu" id="app-menu">
+      <div class="app-menu-header">
+        <h3>Applications</h3>
+        <button class="close-menu" onclick="toggleAppMenu()">×</button>
+      </div>
+      <div class="app-menu-grid">
+        <div class="app-item" onclick="openTerminal()">
+          <i class="fas fa-terminal"></i>
+          <span>Terminal</span>
         </div>
+        <div class="app-item" onclick="openSettings()">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+        <div class="app-item" onclick="openProjects()">
+          <i class="fas fa-folder-open"></i>
+          <span>Projects</span>
+        </div>
+        <div class="app-item" onclick="openAbout()">
+          <i class="fas fa-user-ninja"></i>
+          <span>About</span>
+        </div>
+        <div class="app-item" onclick="openContact()">
+          <i class="fas fa-envelope"></i>
+          <span>Contact</span>
+        </div>
+      </div>
+    </div>
 
-        <!-- Enhanced Desktop Icons -->
-        <div class="desktop-icons">
-            <div class="desktop-icon" onclick="openTerminal()" data-tooltip="Terminal">
-                <i class="fas fa-terminal"></i>
-                <span>Terminal</span>
-                <div class="icon-glow"></div>
-            </div>
-            <div class="desktop-icon" onclick="openProjects()" data-tooltip="Projects">
-                <i class="fas fa-folder-open"></i>
-                <span>Projects</span>
-                <div class="icon-glow"></div>
-            </div>
-            <div class="desktop-icon" onclick="openAbout()" data-tooltip="About Me">
-                <i class="fas fa-user-ninja"></i>
+    <!-- Settings Window -->
+    <div class="window settings-window" id="settings-window">
+      <div class="window-header">
+        <div class="window-title-bar">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+        <div class="window-controls">
+          <button class="window-btn minimize" onclick="minimizeWindow('settings-window')">
+            −
+          </button>
+          <button class="window-btn maximize" onclick="maximizeWindow('settings-window')">
+            □
+          </button>
+          <button class="window-btn close" onclick="closeWindow('settings-window')">
+            ×
+          </button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="settings-content">
+          <div class="settings-sidebar">
+            <div class="settings-nav">
+              <div class="nav-item active" onclick="showSettingsTab('wallpaper')">
+                <i class="fas fa-image"></i>
+                <span>Wallpaper</span>
+              </div>
+              <div class="nav-item" onclick="showSettingsTab('appearance')">
+                <i class="fas fa-palette"></i>
+                <span>Appearance</span>
+              </div>
+              <div class="nav-item" onclick="showSettingsTab('system')">
+                <i class="fas fa-microchip"></i>
+                <span>System</span>
+              </div>
+              <div class="nav-item" onclick="showSettingsTab('about-settings')">
+                <i class="fas fa-info-circle"></i>
                 <span>About</span>
-                <div class="icon-glow"></div>
+              </div>
             </div>
-            <div class="desktop-icon" onclick="openContact()" data-tooltip="Contact">
-                <i class="fas fa-envelope"></i>
-                <span>Contact</span>
-                <div class="icon-glow"></div>
+          </div>
+
+          <div class="settings-main">
+            <!-- Wallpaper Settings -->
+            <div class="settings-tab active" id="wallpaper-tab">
+              <h3><i class="fas fa-image"></i> Wallpaper Settings</h3>
+              <p>Choose your desktop background</p>
+
+              <div class="wallpaper-grid" id="wallpaper-grid">
+                <!-- Wallpapers will be populated by JavaScript -->
+              </div>
+
+              <div class="wallpaper-controls">
+                <button class="settings-btn" onclick="setRandomWallpaper()">
+                  <i class="fas fa-random"></i>
+                  Random Wallpaper
+                </button>
+                <button class="settings-btn" onclick="refreshWallpapers()">
+                  <i class="fas fa-sync-alt"></i>
+                  Refresh Gallery
+                </button>
+              </div>
             </div>
-            <div class="desktop-icon" onclick="openRice()" data-tooltip="Personal Info">
-                <i class="fas fa-desktop"></i>
-                <span>Personal</span>
-                <div class="icon-glow"></div>
+
+            <!-- Appearance Settings -->
+            <div class="settings-tab" id="appearance-tab">
+              <h3><i class="fas fa-palette"></i> Appearance Settings</h3>
+              <p>Customize the look and feel</p>
+
+              <div class="setting-group">
+                <h4>Color Scheme</h4>
+                <div class="color-schemes">
+                  <div class="color-scheme active" data-theme="catppuccin-mocha" onclick="setTheme('catppuccin-mocha')">
+                    <div class="scheme-preview">
+                      <div class="color" style="background: #1e1e2e"></div>
+                      <div class="color" style="background: #89b4fa"></div>
+                      <div class="color" style="background: #cba6f7"></div>
+                    </div>
+                    <span>Catppuccin Mocha</span>
+                  </div>
+                  <div class="color-scheme" data-theme="gruvbox-dark" onclick="setTheme('gruvbox-dark')">
+                    <div class="scheme-preview">
+                      <div class="color" style="background: #282828"></div>
+                      <div class="color" style="background: #fabd2f"></div>
+                      <div class="color" style="background: #fb4934"></div>
+                    </div>
+                    <span>Gruvbox Dark</span>
+                  </div>
+                  <div class="color-scheme" data-theme="nord" onclick="setTheme('nord')">
+                    <div class="scheme-preview">
+                      <div class="color" style="background: #2e3440"></div>
+                      <div class="color" style="background: #88c0d0"></div>
+                      <div class="color" style="background: #bf616a"></div>
+                    </div>
+                    <span>Nord</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="setting-group">
+                <h4>Animation Effects</h4>
+                <div class="setting-row">
+                  <label>Cursor Trails</label>
+                  <div class="toggle-switch">
+                    <input type="checkbox" id="cursor-trails" checked onclick="toggleCursorTrails()" />
+                    <span class="slider"></span>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <label>Window Animations</label>
+                  <div class="toggle-switch">
+                    <input type="checkbox" id="window-animations" checked onclick="toggleWindowAnimations()" />
+                    <span class="slider"></span>
+                  </div>
+                </div>
+                <div class="setting-row">
+                  <label>Background Effects</label>
+                  <div class="toggle-switch">
+                    <input type="checkbox" id="background-effects" checked onclick="toggleBackgroundEffects()" />
+                    <span class="slider"></span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="desktop-icon" onclick="openSettings()" data-tooltip="Settings">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-                <div class="icon-glow"></div>
+
+            <!-- System Settings -->
+            <div class="settings-tab" id="system-tab">
+              <h3><i class="fas fa-microchip"></i> System Information</h3>
+
+              <div class="system-info">
+                <div class="info-card">
+                  <i class="fab fa-linux"></i>
+                  <div class="info-details">
+                    <h4>Operating System</h4>
+                    <p>Portfolio OS</p>
+                  </div>
+                </div>
+
+                <div class="info-card">
+                  <i class="fas fa-desktop"></i>
+                  <div class="info-details">
+                    <h4>Desktop Environment</h4>
+                    <p>Hyprland Web Edition (without Hyprland features :p)</p>
+                  </div>
+                </div>
+
+                <div class="info-card">
+                  <i class="fas fa-code"></i>
+                  <div class="info-details">
+                    <h4>Built With</h4>
+                    <p>HTML5, CSS3, JavaScript</p>
+                  </div>
+                </div>
+
+                <div class="info-card">
+                  <i class="fas fa-palette"></i>
+                  <div class="info-details">
+                    <h4>Kernel</h4>
+                    <p>Linux 6.20.4-5-web</p>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <!-- About Settings -->
+            <div class="settings-tab" id="about-settings-tab">
+              <h3><i class="fas fa-info-circle"></i> About This Desktop</h3>
+
+              <div class="about-settings">
+                <div class="logo-section">
+                  <i class="fab fa-linux"></i>
+                  <h2>randomboi404's Desktop</h2>
+                  <p>Version 1.0</p>
+                </div>
+
+                <div class="credits">
+                  <h4>Features</h4>
+                  <ul>
+                    <li>
+                      Hyprland-style window management (without any Hyprland
+                      related stuff!!)
+                    </li>
+                    <li>Dynamic wallpaper system (cap!!)</li>
+                    <li>Interactive terminal emulation (Get Flexed!)</li>
+                    <li>Animated background effects</li>
+                    <li>
+                      Responsive design for all devices (Not sure about this
+                      one...)
+                    </li>
+                  </ul>
+
+                  <h4>Technologies Used</h4>
+                  <ul>
+                    <li>Vanilla JavaScript for maximum performance</li>
+                    <li>CSS3 animations and transforms</li>
+                    <li>Unsplash API for wallpapers</li>
+                    <li>Canvas for particle effects</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <!-- App Menu -->
-        <div class="app-menu" id="app-menu">
-            <div class="app-menu-header">
-                <h3>Applications</h3>
-                <button class="close-menu" onclick="toggleAppMenu()">×</button>
-            </div>
-            <div class="app-menu-grid">
-                <div class="app-item" onclick="openTerminal()">
-                    <i class="fas fa-terminal"></i>
-                    <span>Terminal</span>
-                </div>
-                <div class="app-item" onclick="openSettings()">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </div>
-                <div class="app-item" onclick="openProjects()">
-                    <i class="fas fa-folder-open"></i>
-                    <span>Projects</span>
-                </div>
-                <div class="app-item" onclick="openAbout()">
-                    <i class="fas fa-user-ninja"></i>
-                    <span>About</span>
-                </div>
-                <div class="app-item" onclick="openContact()">
-                    <i class="fas fa-envelope"></i>
-                    <span>Contact</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Settings Window -->
-        <div class="window settings-window" id="settings-window">
-            <div class="window-header">
-                <div class="window-title-bar">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </div>
-                <div class="window-controls">
-                    <button class="window-btn minimize" onclick="minimizeWindow('settings-window')">−</button>
-                    <button class="window-btn maximize" onclick="maximizeWindow('settings-window')">□</button>
-                    <button class="window-btn close" onclick="closeWindow('settings-window')">×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <div class="settings-content">
-                    <div class="settings-sidebar">
-                        <div class="settings-nav">
-                            <div class="nav-item active" onclick="showSettingsTab('wallpaper')">
-                                <i class="fas fa-image"></i>
-                                <span>Wallpaper</span>
-                            </div>
-                            <div class="nav-item" onclick="showSettingsTab('appearance')">
-                                <i class="fas fa-palette"></i>
-                                <span>Appearance</span>
-                            </div>
-                            <div class="nav-item" onclick="showSettingsTab('system')">
-                                <i class="fas fa-microchip"></i>
-                                <span>System</span>
-                            </div>
-                            <div class="nav-item" onclick="showSettingsTab('about-settings')">
-                                <i class="fas fa-info-circle"></i>
-                                <span>About</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="settings-main">
-                        <!-- Wallpaper Settings -->
-                        <div class="settings-tab active" id="wallpaper-tab">
-                            <h3><i class="fas fa-image"></i> Wallpaper Settings</h3>
-                            <p>Choose your desktop background</p>
-
-                            <div class="wallpaper-grid" id="wallpaper-grid">
-                                <!-- Wallpapers will be populated by JavaScript -->
-                            </div>
-
-                            <div class="wallpaper-controls">
-                                <button class="settings-btn" onclick="setRandomWallpaper()">
-                                    <i class="fas fa-random"></i>
-                                    Random Wallpaper
-                                </button>
-                                <button class="settings-btn" onclick="refreshWallpapers()">
-                                    <i class="fas fa-sync-alt"></i>
-                                    Refresh Gallery
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Appearance Settings -->
-                        <div class="settings-tab" id="appearance-tab">
-                            <h3><i class="fas fa-palette"></i> Appearance Settings</h3>
-                            <p>Customize the look and feel</p>
-
-                            <div class="setting-group">
-                                <h4>Color Scheme</h4>
-                                <div class="color-schemes">
-                                    <div class="color-scheme active" data-theme="catppuccin-mocha" onclick="setTheme('catppuccin-mocha')">
-                                        <div class="scheme-preview">
-                                            <div class="color" style="background: #1e1e2e;"></div>
-                                            <div class="color" style="background: #89b4fa;"></div>
-                                            <div class="color" style="background: #cba6f7;"></div>
-                                        </div>
-                                        <span>Catppuccin Mocha</span>
-                                    </div>
-                                    <div class="color-scheme" data-theme="gruvbox-dark" onclick="setTheme('gruvbox-dark')">
-                                        <div class="scheme-preview">
-                                            <div class="color" style="background: #282828;"></div>
-                                            <div class="color" style="background: #fabd2f;"></div>
-                                            <div class="color" style="background: #fb4934;"></div>
-                                        </div>
-                                        <span>Gruvbox Dark</span>
-                                    </div>
-                                    <div class="color-scheme" data-theme="nord" onclick="setTheme('nord')">
-                                        <div class="scheme-preview">
-                                            <div class="color" style="background: #2e3440;"></div>
-                                            <div class="color" style="background: #88c0d0;"></div>
-                                            <div class="color" style="background: #bf616a;"></div>
-                                        </div>
-                                        <span>Nord</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="setting-group">
-                                <h4>Animation Effects</h4>
-                                <div class="setting-row">
-                                    <label>Cursor Trails</label>
-                                    <div class="toggle-switch">
-                                        <input type="checkbox" id="cursor-trails" checked onclick="toggleCursorTrails()">
-                                        <span class="slider"></span>
-                                    </div>
-                                </div>
-                                <div class="setting-row">
-                                    <label>Window Animations</label>
-                                    <div class="toggle-switch">
-                                        <input type="checkbox" id="window-animations" checked onclick="toggleWindowAnimations()">
-                                        <span class="slider"></span>
-                                    </div>
-                                </div>
-                                <div class="setting-row">
-                                    <label>Background Effects</label>
-                                    <div class="toggle-switch">
-                                        <input type="checkbox" id="background-effects" checked onclick="toggleBackgroundEffects()">
-                                        <span class="slider"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- System Settings -->
-                        <div class="settings-tab" id="system-tab">
-                            <h3><i class="fas fa-microchip"></i> System Information</h3>
-
-                            <div class="system-info">
-                                <div class="info-card">
-                                    <i class="fab fa-linux"></i>
-                                    <div class="info-details">
-                                        <h4>Operating System</h4>
-                                        <p>Portfolio OS</p>
-                                    </div>
-                                </div>
-
-				<div class="info-card">
-                                    <i class="fas fa-desktop"></i>
-                                    <div class="info-details">
-                                        <h4>Desktop Environment</h4>
-                                        <p>Hyprland Web Edition (without Hyprland features :p)</p>
-                                    </div>
-                                </div>
-
-                                <div class="info-card">
-                                    <i class="fas fa-code"></i>
-                                    <div class="info-details">
-                                        <h4>Built With</h4>
-                                        <p>HTML5, CSS3, JavaScript</p>
-                                    </div>
-                                </div>
-
-                                <div class="info-card">
-                                    <i class="fas fa-palette"></i>
-                                    <div class="info-details">
-                                        <h4>Kernel</h4>
-                                        <p>Linux 6.20.4-5-web</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- About Settings -->
-                        <div class="settings-tab" id="about-settings-tab">
-                            <h3><i class="fas fa-info-circle"></i> About This Desktop</h3>
-
-                            <div class="about-settings">
-                                <div class="logo-section">
-                                    <i class="fab fa-linux"></i>
-                                    <h2>randomboi404's Desktop</h2>
-                                    <p>Version 1.0</p>
-                                </div>
-
-                                <div class="credits">
-                                    <h4>Features</h4>
-                                    <ul>
-                                        <li>Hyprland-style window management (without any Hyprland related stuff!!)</li>
-                                        <li>Dynamic wallpaper system (cap!!)</li>
-                                        <li>Interactive terminal emulation (Get Flexed!)</li>
-                                        <li>Animated background effects</li>
-                                        <li>Responsive design for all devices (Not sure about this one...)</li>
-                                    </ul>
-
-                                    <h4>Technologies Used</h4>
-                                    <ul>
-                                        <li>Vanilla JavaScript for maximum performance</li>
-                                        <li>CSS3 animations and transforms</li>
-                                        <li>Unsplash API for wallpapers</li>
-                                        <li>Canvas for particle effects</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enhanced Terminal Window -->
-        <div class="window terminal-window" id="terminal-window">
-            <div class="window-header">
-                <div class="window-title-bar">
-                    <i class="fas fa-terminal"></i>
-                    <span>randomboi404@arch:~</span>
-                </div>
-                <div class="window-controls">
-                    <button class="window-btn minimize" onclick="minimizeWindow('terminal-window')">−</button>
-                    <button class="window-btn maximize" onclick="maximizeWindow('terminal-window')">□</button>
-                    <button class="window-btn close" onclick="closeWindow('terminal-window')">×</button>
-                </div>
-            </div>
-            <div class="terminal-content">
-                <div class="terminal-output" id="terminal-output"></div>
-                <div class="terminal-input-line">
-                    <span class="prompt">[randomboi404@arch ~]$ </span>
-                    <input type="text" class="terminal-input" id="terminal-input" autocomplete="off">
-                    <span class="cursor-blink">_</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enhanced About Window -->
-        <div class="window about-window" id="about-window">
-            <div class="window-header">
-                <div class="window-title-bar">
-                    <i class="fas fa-user-ninja"></i>
-                    <span>About randomboi404</span>
-                </div>
-                <div class="window-controls">
-                    <button class="window-btn minimize" onclick="minimizeWindow('about-window')">−</button>
-                    <button class="window-btn maximize" onclick="maximizeWindow('about-window')">□</button>
-                    <button class="window-btn close" onclick="closeWindow('about-window')">×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <div class="about-content">
-                    <div class="profile-section">
-                        <div class="ascii-art">
-                            <pre>
-    ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ███╗   ███╗
-    ██╔══██╗██╔══██╗████╗  ██║██╔══██╗██╔═══██╗████╗ ████║
-    ██████╔╝███████║██╔██╗ ██║██║  ██║██║   ██║██╔████╔██║
-    ██╔══██╗██╔══██║██║╚██╗██║██║  ██║██║   ██║██║╚██╔╝██║
-    ██║  ██║██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║ ╚═╝ ██║
-    ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝     ╚═╝
-
-		  ██████╗  ██████╗ ██╗
-		  ██╔══██╗██╔═══██╗██║
-		  ██████╔╝██║   ██║██║
-		  ██╔══██╗██║   ██║██║
-		  ██████╔╝╚██████╔╝██║
-
-
-	        ██╗  ██╗ ██████╗ ██╗  ██╗
-	        ██║  ██║██╔═████╗██║  ██║
-	        ███████║██║██╔██║███████║
-	        ╚════██║████╔╝██║╚════██║
-                     ██║╚██████╔╝     ██║
-	     	     ╚═╝ ╚═════╝      ╚═╝
-                            </pre>
-                        </div>
-                        <div class="bio">
-                            <h2>Student & Linux Enthusiast</h2>
-                            <p>I am a programmer as well as a Linux expert.</p>
-                            <div class="stats">
-                                <div class="stat-item">
-                                    <span class="stat-value">Arch Linux</span>
-                                    <span class="stat-label">OS</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value">Hyprland</span>
-                                    <span class="stat-label">WM</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skills-section">
-                        <h3>Technical Arsenal</h3>
-                        <div class="skill-categories">
-                            <div class="skill-category">
-                                <h4>Languages</h4>
-                                <div class="skill-tags">
-                                    <span class="skill-tag python">Python</span>
-                                    <span class="skill-tag cpp">C++</span>
-                                    <span class="skill-tag java">Java</span>
-                                    <span class="skill-tag kotlin">Kotlin</span>
-                                </div>
-                            </div>
-                            <div class="skill-category">
-                                <h4>Platforms</h4>
-                                <div class="skill-tags">
-                                    <span class="skill-tag linux">Linux</span>
-                                    <span class="skill-tag android">Android</span>
-                                    <span class="skill-tag web">Web</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Projects Window -->
-        <div class="window projects-window" id="projects-window">
-            <div class="window-header">
-                <div class="window-title-bar">
-                    <i class="fas fa-folder-open"></i>
-                    <span>Projects</span>
-                </div>
-                <div class="window-controls">
-                    <button class="window-btn minimize" onclick="minimizeWindow('projects-window')">−</button>
-                    <button class="window-btn maximize" onclick="maximizeWindow('projects-window')">□</button>
-                    <button class="window-btn close" onclick="closeWindow('projects-window')">×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <div class="projects-content">
-                    <div class="project-item featured" onclick="openProject('eww')">
-                        <div class="project-icon">
-                            <i class="fas fa-desktop"></i>
-                        </div>
-                        <div class="project-info">
-                            <h3>Awesome EWW Rice</h3>
-                            <p>A well crafted Arch x Hyprland rice using EWW widgets. Features bar, dashboard, widgets and aesthetic perfection.</p>
-                            <div class="project-tags">
-                                <span class="tag">EWW</span>
-                                <span class="tag">Hyprland</span>
-                                <span class="tag">Linux</span>
-				<span class="tag">GTK</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/randomboi404/eww" target="_blank" class="project-link">
-                                    <i class="fab fa-github"></i> View on GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-placeholder">
-                        <i class="fas fa-code-branch"></i>
-                        <h4>More Projects Coming Soon</h4>
-                        <p>Currently brewing something amazing in the terminal...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contact Window -->
-        <div class="window contact-window" id="contact-window">
-            <div class="window-header">
-                <div class="window-title-bar">
-                    <i class="fas fa-envelope"></i>
-                    <span>Contact</span>
-                </div>
-                <div class="window-controls">
-                    <button class="window-btn minimize" onclick="minimizeWindow('contact-window')">−</button>
-                    <button class="window-btn maximize" onclick="maximizeWindow('contact-window')">□</button>
-                    <button class="window-btn close" onclick="closeWindow('contact-window')">×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <div class="contact-content">
-                    <div class="contact-header">
-                        <h2>Let's Connect!</h2>
-                        <p>I am available on the below platforms!</p>
-                    </div>
-
-                    <div class="social-links">
-                        <div class="social-item" onclick="openLink('https://github.com/randomboi404')">
-                            <i class="fab fa-github"></i>
-                            <div class="social-info">
-                                <h4>GitHub</h4>
-                                <p>randomboi404</p>
-                            </div>
-                        </div>
-
-                        <div class="social-item" onclick="openLink('https://reddit.com/u/randomboiii69420')">
-                            <i class="fab fa-reddit"></i>
-                            <div class="social-info">
-                                <h4>Reddit</h4>
-                                <p>randomboiii69420</p>
-                            </div>
-                        </div>
-
-                        <div class="social-item discord" onclick="copyDiscord()">
-                            <i class="fab fa-discord"></i>
-                            <div class="social-info">
-                                <h4>Discord</h4>
-                                <p>randomboiii5</p>
-                                <span class="discord-id">ID: 806782240851886091</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contact-note">
-                        <i class="fas fa-info-circle"></i>
-                        <p>Click Discord to copy my username to clipboard</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rice Window -->
-        <div class="window rice-window" id="rice-window">
-            <div class="window-header">
-                <div class="window-title-bar">
-                    <i class="fas fa-desktop"></i>
-                    <span>Personal Info</span>
-                </div>
-                <div class="window-controls">
-                    <button class="window-btn minimize" onclick="minimizeWindow('rice-window')">−</button>
-                    <button class="window-btn maximize" onclick="maximizeWindow('rice-window')">□</button>
-                    <button class="window-btn close" onclick="closeWindow('rice-window')">×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <div class="rice-content">
-                    <div class="rice-showcase">
-                        <h2>I am currently 17 y/o</h2>
-                        <p>
-I was interested in computers ever since I was a kid! The curiosity got the better of me, making me what I currently am!
-Below is what I currently use:
-</p>
-
-                        <div class="rice-details">
-                            <div class="detail-item">
-                                <h4>Operating System</h4>
-                                <p>Arch Linux</p>
-                            </div>
-                            <div class="detail-item">
-                                <h4>WM</h4>
-                                <p>Hyprland</p>
-                            </div>
-                            <div class="detail-item">
-                                <h4>Shell</h4>
-                                <p>Veloria (Releasing soon!)</p>
-                            </div>
-                            <div class="detail-item">
-                                <h4>Terminal</h4>
-                                <p>Kitty</p>
-                            </div>
-                        </div>
-
-                        <div class="rice-links">
-                            <a href="https://github.com/randomboi404/eww" target="_blank" class="rice-link">
-                                <i class="fab fa-github"></i>
-                                Explore My Dotfiles
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Power Menu -->
-        <div class="power-menu-popup" id="power-menu">
-            <div class="power-option" onclick="systemAction('reboot')">
-                <i class="fas fa-redo"></i>
-                <span>Reboot</span>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!-- Notification System -->
-    <div class="notification-area" id="notifications"></div>
-
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loading-screen">
-        <div class="boot-sequence">
-            <div class="boot-logo">
-                <pre>
-██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗      ██████╗ ███████╗
-██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗    ██╔═══██╗██╔════╝
-██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║    ██║   ██║███████╗
-██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║    ██║   ██║╚════██║
-██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝    ╚██████╔╝███████║
-╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝      ╚═════╝ ╚══════╝
-                </pre>
-            </div>
-            <div class="boot-text">
-                <div class="boot-line">Initializing randomboi404's portfolio...</div>
-                <div class="boot-line">Loading our wayland compositor...</div>
-                <div class="boot-line">Mounting /home/randomboi404...</div>
-                <div class="boot-line">Starting Desktop Environment...</div>
-                <div class="boot-line">Welcome to My Enhanced Portfolio!</div>
-            </div>
+    <!-- Enhanced Terminal Window -->
+    <div class="window terminal-window" id="terminal-window">
+      <div class="window-header">
+        <div class="window-title-bar">
+          <i class="fas fa-terminal"></i>
+          <span>randomboi404@arch:~</span>
         </div>
+        <div class="window-controls">
+          <button class="window-btn minimize" onclick="minimizeWindow('terminal-window')">
+            −
+          </button>
+          <button class="window-btn maximize" onclick="maximizeWindow('terminal-window')">
+            □
+          </button>
+          <button class="window-btn close" onclick="closeWindow('terminal-window')">
+            ×
+          </button>
+        </div>
+      </div>
+      <div class="terminal-content">
+        <div class="terminal-output" id="terminal-output"></div>
+        <div class="terminal-input-line">
+          <span class="prompt">[randomboi404@arch ~]$ </span>
+          <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" />
+          <span class="cursor-blink">_</span>
+        </div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Enhanced About Window -->
+    <div class="window about-window" id="about-window">
+      <div class="window-header">
+        <div class="window-title-bar">
+          <i class="fas fa-user-ninja"></i>
+          <span>About randomboi404</span>
+        </div>
+        <div class="window-controls">
+          <button class="window-btn minimize" onclick="minimizeWindow('about-window')">
+            −
+          </button>
+          <button class="window-btn maximize" onclick="maximizeWindow('about-window')">
+            □
+          </button>
+          <button class="window-btn close" onclick="closeWindow('about-window')">
+            ×
+          </button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="about-content">
+          <div class="profile-section">
+            <div class="ascii-art">
+              <pre>
+                ██████╗ █████╗ ███╗ ██╗██████╗ ██████╗ ███╗ ███╗
+                ██╔══██╗██╔══██╗████╗ ██║██╔══██╗██╔═══██╗████╗ ████║
+                ██████╔╝███████║██╔██╗ ██║██║ ██║██║ ██║██╔████╔██║
+                ██╔══██╗██╔══██║██║╚██╗██║██║ ██║██║ ██║██║╚██╔╝██║
+                ██║ ██║██║ ██║██║ ╚████║██████╔╝╚██████╔╝██║ ╚═╝ ██║
+                ╚═╝ ╚═╝╚═╝ ╚═╝╚═╝ ╚═══╝╚═════╝ ╚═════╝ ╚═╝ ╚═╝
+
+                ██████╗ ██████╗ ██╗
+                ██╔══██╗██╔═══██╗██║
+                ██████╔╝██║ ██║██║
+                ██╔══██╗██║ ██║██║
+                ██████╔╝╚██████╔╝██║
+
+
+                ██╗ ██╗ ██████╗ ██╗ ██╗
+                ██║ ██║██╔═████╗██║ ██║
+                ███████║██║██╔██║███████║
+                ╚════██║████╔╝██║╚════██║
+                ██║╚██████╔╝ ██║
+                ╚═╝ ╚═════╝ ╚═╝
+              </pre>
+            </div>
+            <div class="bio">
+              <h2>Student & Linux Enthusiast</h2>
+              <p>I am a programmer as well as a Linux expert.</p>
+              <div class="stats">
+                <div class="stat-item">
+                  <span class="stat-value">Arch Linux</span>
+                  <span class="stat-label">OS</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">Hyprland</span>
+                  <span class="stat-label">WM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-section">
+            <h3>Technical Arsenal</h3>
+            <div class="skill-categories">
+              <div class="skill-category">
+                <h4>Languages</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag python">Python</span>
+                  <span class="skill-tag cpp">C++</span>
+                  <span class="skill-tag java">Java</span>
+                  <span class="skill-tag kotlin">Kotlin</span>
+                </div>
+              </div>
+              <div class="skill-category">
+                <h4>Platforms</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag linux">Linux</span>
+                  <span class="skill-tag android">Android</span>
+                  <span class="skill-tag web">Web</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects Window -->
+    <div class="window projects-window" id="projects-window">
+      <div class="window-header">
+        <div class="window-title-bar">
+          <i class="fas fa-folder-open"></i>
+          <span>Projects</span>
+        </div>
+        <div class="window-controls">
+          <button class="window-btn minimize" onclick="minimizeWindow('projects-window')">
+            −
+          </button>
+          <button class="window-btn maximize" onclick="maximizeWindow('projects-window')">
+            □
+          </button>
+          <button class="window-btn close" onclick="closeWindow('projects-window')">
+            ×
+          </button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="projects-content">
+          <div class="project-item featured" onclick="openProject('eww')">
+            <div class="project-icon">
+              <i class="fas fa-desktop"></i>
+            </div>
+            <div class="project-info">
+              <h3>Awesome EWW Rice</h3>
+              <p>
+                A well crafted Arch x Hyprland rice using EWW widgets.
+                Features bar, dashboard, widgets and aesthetic perfection.
+              </p>
+              <div class="project-tags">
+                <span class="tag">EWW</span>
+                <span class="tag">Hyprland</span>
+                <span class="tag">Linux</span>
+                <span class="tag">GTK</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/randomboi404/eww" target="_blank" class="project-link">
+                  <i class="fab fa-github"></i> View on GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-placeholder">
+            <i class="fas fa-code-branch"></i>
+            <h4>More Projects Coming Soon</h4>
+            <p>Currently brewing something amazing in the terminal...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Window -->
+    <div class="window contact-window" id="contact-window">
+      <div class="window-header">
+        <div class="window-title-bar">
+          <i class="fas fa-envelope"></i>
+          <span>Contact</span>
+        </div>
+        <div class="window-controls">
+          <button class="window-btn minimize" onclick="minimizeWindow('contact-window')">
+            −
+          </button>
+          <button class="window-btn maximize" onclick="maximizeWindow('contact-window')">
+            □
+          </button>
+          <button class="window-btn close" onclick="closeWindow('contact-window')">
+            ×
+          </button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="contact-content">
+          <div class="contact-header">
+            <h2>Let's Connect!</h2>
+            <p>I am available on the below platforms!</p>
+          </div>
+
+          <div class="social-links">
+            <div class="social-item" onclick="openLink('https://github.com/randomboi404')">
+              <i class="fab fa-github"></i>
+              <div class="social-info">
+                <h4>GitHub</h4>
+                <p>randomboi404</p>
+              </div>
+            </div>
+
+            <div class="social-item" onclick="openLink('https://reddit.com/u/randomboiii69420')">
+              <i class="fab fa-reddit"></i>
+              <div class="social-info">
+                <h4>Reddit</h4>
+                <p>randomboiii69420</p>
+              </div>
+            </div>
+
+            <div class="social-item discord" onclick="copyDiscord()">
+              <i class="fab fa-discord"></i>
+              <div class="social-info">
+                <h4>Discord</h4>
+                <p>randomboiii5</p>
+                <span class="discord-id">ID: 806782240851886091</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-note">
+            <i class="fas fa-info-circle"></i>
+            <p>Click Discord to copy my username to clipboard</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rice Window -->
+    <div class="window rice-window" id="rice-window">
+      <div class="window-header">
+        <div class="window-title-bar">
+          <i class="fas fa-desktop"></i>
+          <span>Personal Info</span>
+        </div>
+        <div class="window-controls">
+          <button class="window-btn minimize" onclick="minimizeWindow('rice-window')">
+            −
+          </button>
+          <button class="window-btn maximize" onclick="maximizeWindow('rice-window')">
+            □
+          </button>
+          <button class="window-btn close" onclick="closeWindow('rice-window')">
+            ×
+          </button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="rice-content">
+          <div class="rice-showcase">
+            <h2>I am currently 17 y/o</h2>
+            <p>
+              I was interested in computers ever since I was a kid! The
+              curiosity got the better of me, making me what I currently am!
+              Below is what I currently use:
+            </p>
+
+            <div class="rice-details">
+              <div class="detail-item">
+                <h4>Operating System</h4>
+                <p>Arch Linux</p>
+              </div>
+              <div class="detail-item">
+                <h4>WM</h4>
+                <p>Hyprland</p>
+              </div>
+              <div class="detail-item">
+                <h4>Shell</h4>
+                <p>Veloria (Releasing soon!)</p>
+              </div>
+              <div class="detail-item">
+                <h4>Terminal</h4>
+                <p>Kitty</p>
+              </div>
+            </div>
+
+            <div class="rice-links">
+              <a href="https://github.com/randomboi404/eww" target="_blank" class="rice-link">
+                <i class="fab fa-github"></i>
+                Explore My Dotfiles
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Power Menu -->
+    <div class="power-menu-popup" id="power-menu">
+      <div class="power-option" onclick="systemAction('reboot')">
+        <i class="fas fa-redo"></i>
+        <span>Reboot</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification System -->
+  <div class="notification-area" id="notifications"></div>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="boot-sequence">
+      <div class="boot-logo">
+        <pre>
+          ██████╗ ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗ ██╗ ██████╗ ██████╗ ███████╗
+          ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║ ██║██╔═══██╗ ██╔═══██╗██╔════╝
+          ██████╔╝██║ ██║██████╔╝ ██║ █████╗ ██║ ██║██║ ██║██║ ██║ ██║ ██║███████╗
+          ██╔═══╝ ██║ ██║██╔══██╗ ██║ ██╔══╝ ██║ ██║██║ ██║██║ ██║ ██║ ██║╚════██║
+          ██║ ╚██████╔╝██║ ██║ ██║ ██║ ╚██████╔╝███████╗██║╚██████╔╝ ╚██████╔╝███████║
+          ╚═╝ ╚═════╝ ╚═╝ ╚═╝ ╚═╝ ╚═╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+        </pre>
+      </div>
+      <div class="boot-text">
+        <div class="boot-line">Initializing randomboi404's portfolio...</div>
+        <div class="boot-line">Loading our wayland compositor...</div>
+        <div class="boot-line">Mounting /home/randomboi404...</div>
+        <div class="boot-line">Starting Desktop Environment...</div>
+        <div class="boot-line">Welcome to My Enhanced Portfolio!</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
