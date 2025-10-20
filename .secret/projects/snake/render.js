@@ -4,6 +4,8 @@ const ctx = canvas.getContext("2d");
 const unitSize = 25;
 const tickSpeed = 24;
 
+const bombSize = unitSize * 4;
+
 const boardWidth = canvas.width;
 const boardHeight = canvas.height;
 
@@ -20,8 +22,18 @@ let specialFood = {
   y: 0,
 };
 
+let bomb = {
+  x: 0,
+  y: 0,
+};
+
+let gradientOffset = 0;
+
 let score = 0;
 let gameRunning = true;
+
+const bombActiveInterval = 3_000;
+const bombGenerateRadius = unitSize * 16;
 
 const inputQueue = [];
 
@@ -29,7 +41,27 @@ const specialFoodPerSecondProbability = 10; // in %age
 const specialFoodPerTickProbability =
   1 - Math.pow(1 - specialFoodPerSecondProbability / 100, 1 / tickSpeed);
 
+const bombPerSecondProbability = 30; // in %age
+const bombPerTickProbability =
+  1 - Math.pow(1 - bombPerSecondProbability / 100, 1 / tickSpeed);
+
 let specialFoodGenerated = false;
+
+const maxBombs = 6;
+
+const bombTimeoutIds = [];
+
+const bombImg = new Image();
+bombImg.src = "./bomb7.png";
+
+const bombCanvas = document.createElement("canvas");
+const bombCtx = bombCanvas.getContext("2d");
+
+bombImg.onload = () => {
+  bombCanvas.width = bombSize;
+  bombCanvas.height = bombSize;
+  bombCtx.drawImage(bombImg, 0, 0, bombSize, bombSize);
+};
 
 window.addEventListener("keydown", changeDirection);
 
@@ -56,11 +88,19 @@ function beginGame() {
       score = 0;
 
       renderGameOverScreen();
+
+      bombs.length = 0;
+      bombCount = 0;
       clearInterval(intervalId);
+      bombTimeoutIds.forEach((bombTimeoutId) => {
+        clearInterval(bombTimeoutId);
+      });
+      bombTimeoutIds.length = 0;
     } else {
       updateBackground();
       renderFood();
       processSpecialFood();
+      processBomb();
       renderSnake();
       moveSnake();
       renderScore();
@@ -69,8 +109,13 @@ function beginGame() {
 }
 
 function updateBackground() {
-  ctx.fillStyle = "white";
+  let gradient = ctx.createLinearGradient(0, 0, boardWidth, boardHeight);
+  gradient.addColorStop(0, `hsl(${gradientOffset % 360}, 70%, 50%)`);
+  gradient.addColorStop(1, `hsl(${(gradientOffset + 120) % 360}, 70%, 50%)`);
+
+  ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, boardWidth, boardHeight);
+  gradientOffset += 0.5;
 }
 
 function renderGameOverScreen() {
@@ -150,6 +195,96 @@ function processSpecialFood() {
 
 function isFoodEaten(food) {
   return snake[0].x === food.x && snake[0].y === food.y;
+}
+
+function generateBombPosition() {
+  const possiblePositions = [];
+
+  for (let x = 0; x < boardWidth - bombSize; x += unitSize)
+    for (let y = 0; y < boardHeight - bombSize; y += unitSize) {
+      const tooClose = snake.some(
+        (segment) =>
+          Math.abs(x - segment.x) <= bombGenerateRadius &&
+          Math.abs(y - segment.y) <= bombGenerateRadius,
+      );
+
+      if (!tooClose) possiblePositions.push({ x, y });
+    }
+
+  if (possiblePositions.length === 0) {
+    return;
+  }
+
+  const bomb = {};
+
+  const randomPositionId = Math.floor(Math.random() * possiblePositions.length);
+  bomb.x = possiblePositions[randomPositionId].x;
+  bomb.y = possiblePositions[randomPositionId].y;
+
+  bombs.push(bomb);
+}
+
+function renderBomb(bomb) {
+  bombCtx.drawImage(bombImg, 0, 0, bombSize, bombSize);
+  ctx.drawImage(bombImg, bomb.x, bomb.y, bombSize, bombSize);
+}
+
+const bombs = [];
+let bombCount = 0;
+
+function processBomb() {
+  if (bombCount > 0) {
+    bombs.forEach((bomb) => {
+      renderBomb(bomb);
+    });
+  }
+  if (Math.random() < bombPerTickProbability && bombCount < maxBombs) {
+    bombCount++;
+    generateBombPosition();
+    renderBomb(bombs[bombs.length - 1]);
+
+    bombTimeoutIds.push(
+      setTimeout(() => {
+        bombs.shift();
+        bombCount--;
+      }, bombActiveInterval),
+    );
+  }
+}
+
+function isCollidedWithBomb(bomb) {
+  const head = snake[0];
+
+  // Compute overlapping rectangle
+  const startX = Math.max(head.x, bomb.x);
+  const startY = Math.max(head.y, bomb.y);
+  const endX = Math.min(head.x + unitSize, bomb.x + bombSize);
+  const endY = Math.min(head.y + unitSize, bomb.y + bombSize);
+
+  if (startX >= endX || startY >= endY) return false; // No overlap
+
+  const width = endX - startX;
+  const height = endY - startY;
+
+  // Get bomb pixels in the overlapping area
+  const bombData = bombCtx.getImageData(
+    startX - bomb.x,
+    startY - bomb.y,
+    width,
+    height,
+  ).data;
+
+  // Check each pixel
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const idx = (y * width + x) * 4 + 3; // alpha channel
+      if (bombData[idx] > 0) {
+        return true; // collision
+      }
+    }
+  }
+
+  return false;
 }
 
 function isCollided(head) {
@@ -235,12 +370,9 @@ function moveSnake() {
   if (isCollided(head)) gameRunning = false;
   snake.unshift(head);
 
-  // Teleport the snake when it reaches the borders
-  if (snake[0].x < 0) snake[0].x = boardWidth - unitSize;
-  else if (snake[0].x >= boardWidth) snake[0].x = 0;
-
-  if (snake[0].y < 0) snake[0].y = boardHeight - unitSize;
-  else if (snake[0].y >= boardHeight) snake[0].y = 0;
+  bombs.forEach((bomb) => {
+    if (isCollidedWithBomb(bomb)) gameRunning = false;
+  });
 
   if (isFoodEaten(food)) {
     score++;
@@ -251,6 +383,13 @@ function moveSnake() {
   } else {
     snake.pop();
   }
+
+  // Teleport the snake when it reaches the borders
+  if (snake[0].x < 0) snake[0].x = boardWidth - unitSize;
+  else if (snake[0].x >= boardWidth) snake[0].x = 0;
+
+  if (snake[0].y < 0) snake[0].y = boardHeight - unitSize;
+  else if (snake[0].y >= boardHeight) snake[0].y = 0;
 }
 
 function pushToInputQueue(x, y) {
