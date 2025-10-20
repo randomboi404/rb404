@@ -433,3 +433,4 @@ function changeDirection(event) {
     beginGame();
   }
 }
+
